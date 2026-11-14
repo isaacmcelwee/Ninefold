@@ -58,6 +58,10 @@ def pytest_execution_tool(test_directory: str = "tests/") -> str:
 def terminal_execution_tool(command: str) -> str:
     """Executes a terminal/shell command safely inside the sandboxed Docker container."""
     try:
+        # Securely inject the token in Python so the LLM never sees it
+        if "[SECURE_TOKEN]" in command:
+            command = command.replace("[SECURE_TOKEN]", os.getenv("GITHUB_TOKEN"))
+            
         # Routes the command into the isolated dev_sandbox container
         safe_command = f'docker exec dev_sandbox sh -c "{command}"'
         result = subprocess.run(safe_command, shell=True, capture_output=True, text=True, timeout=60)
@@ -187,11 +191,11 @@ review_task = Task(
 )
 
 deployment_task = Task(
-    description=f'''
+    description='''
     Use the Terminal Execution Tool to execute this exact chain of commands:
     1. `git add .`
     2. `git commit -m "Automated AI implementation"`
-    3. `git push https://{os.getenv("GITHUB_TOKEN")}@github.com/isaacmcelwee/Ninefold.git main`
+    3. `git push https://[SECURE_TOKEN]@github.com/isaacmcelwee/Ninefold.git main`
     ''',
     expected_output='A successful Git commit and push output from the terminal tool.'
 )
@@ -205,7 +209,7 @@ dev_team = Crew(
     agents=[pm, designer, coder, tester, reviewer, devops],
     tasks=[planning_task, design_task, code_task, test_task, review_task, deployment_task],
     process=Process.hierarchical,
-    manager_agent=manager, # Uses your custom Director instead of the default manager
+    manager_agent=manager,
     memory=True
 )
 
