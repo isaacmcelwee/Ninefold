@@ -1,0 +1,15 @@
+2026-11-13 18:29:14,411 - INFO - Session Replay for default trace: https://app.agentops.ai/sessions?trace_id=b7c25a21b4ce1a2a3834fd5609fccb07
+2026-11-13 18:31:21,663 - ERROR - Unexpected error during span export: 'AuthenticatedOTLPExporter' object has no attribute '_headers'
+2026-11-13 18:31:42,862 - ERROR - Unexpected error during span export: 'AuthenticatedOTLPExporter' object has no attribute '_headers'
+2026-11-13 18:32:13,357 - ERROR - Error in span Crew Manager.agent: cannot schedule new futures after shutdown
+2026-11-13 18:32:13,373 - ERROR - Error in span Crew Manager.agent: cannot schedule new futures after shutdown
+2026-11-13 18:32:13,377 - ERROR - Error in span Crew Manager.agent: cannot schedule new futures after shutdown
+2026-11-13 18:32:13,394 - ERROR - Error in span 
+    1. Read the specification and architecture design.
+    2. Optional: Use ScrapeWebsiteTool for updated API docs if needed.
+    3. Implement the architecture in Python.
+    4. Save the updated code to 'src/state_machine.py'.
+    .task: cannot schedule new futures after shutdown
+2026-11-13 18:32:13,404 - ERROR - Error in span crewai.workflow: cannot schedule new futures after shutdown
+2026-11-13 18:32:13,641 - ERROR - Unexpected error during span export: 'AuthenticatedOTLPExporter' object has no attribute '_headers'
+2026-11-13 18:32:13,642 - INFO - Session Replay for default.session trace: https://app.agentops.ai/sessions?trace_id=b7c25a21b4ce1a2a3834fd5609fccb07
