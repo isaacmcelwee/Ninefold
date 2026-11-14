@@ -20,8 +20,13 @@ os.environ["EMBEDDINGS_OLLAMA_API_BASE"] = "http://localhost:11434"
 # 1. LLM & TOOL CONFIGURATION
 # ==========================================
 
-# Connect to your local Qwen model running on the AMD GPU
-local_llm = LLM(model="ollama/qwen2.5-coder:14b", base_url="http://localhost:11434")
+# Connect to your expanded local Qwen model using Ollama's OpenAI-compatible endpoint
+local_llm = LLM(
+    model="openai/qwen-game-dev", 
+    base_url="http://localhost:11434/v1", 
+    api_key="ollama-local",
+    context_window_size=16384
+)
 
 # Built-in tools for reading the repository and scraping docs
 repo_reader = DirectoryReadTool(directory='./')
@@ -79,6 +84,8 @@ manager = Agent(
     goal='Oversee the software development lifecycle, delegate tasks to the appropriate experts, and ruthlessly verify the output.',
     backstory=(
         "You are a strict, highly technical engineering director. "
+        "To assign work, you MUST natively invoke the 'delegate_work_to_coworker' tool. "
+        "NEVER output raw JSON or use 'Final Answer' to delegate tasks. "
         "You never accept code that hasn't been linted, tested, and reviewed. "
         "If the Tester or Reviewer finds bugs, you immediately send the work back to the Coder. "
         "You ensure the final output strictly matches the initial architectural specification."
